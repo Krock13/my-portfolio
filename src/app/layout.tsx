@@ -1,8 +1,7 @@
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import { Providers } from './providers';
-
-const inter = Inter({ subsets: ['latin'] });
+import { fontSans } from '@/config/fonts';
+import type { Metadata } from 'next';
+import clsx from 'clsx';
 
 export const metadata: Metadata = {
     title: { template: '%s | Julien Agneray', default: 'Portefolio Julien Agneray' },
@@ -16,8 +15,13 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang='fr' className='dark'>
-            <body className={inter.className}>
+        <html lang='fr' suppressHydrationWarning>
+            <body
+                className={clsx(
+                    'min-h-screen bg-background font-sans antialiased',
+                    fontSans.variable
+                )}
+            >
                 <Providers>{children}</Providers>
             </body>
         </html>
