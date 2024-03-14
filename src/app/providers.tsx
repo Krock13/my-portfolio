@@ -3,6 +3,7 @@
 import { NextUIProvider } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import { ThemeProviderProps } from 'next-themes/dist/types';
+import Navbar from '@/components/Navbar';
 import '../config/global.css';
 
 export interface ProvidersProps {
@@ -15,7 +16,10 @@ export function Providers({ children, themeProps }: ProvidersProps) {
 
     return (
         <NextUIProvider>
-            <main className='purple-dark text-foreground bg-background'>{children}</main>
+            <main className='purple-dark text-foreground bg-background'>
+                <Navbar />
+                {children}
+            </main>
         </NextUIProvider>
     );
 }
