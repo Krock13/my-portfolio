@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import {
     Navbar,
     NavbarBrand,
@@ -6,15 +7,17 @@ import {
     NavbarItem,
     NavbarMenuToggle,
     NavbarMenu,
-    NavbarMenuItem,
-    Link,
     Button,
 } from '@nextui-org/react';
+import Link from 'next/link';
 
 export default function MyNavbar() {
+    'use client';
+    const pathname = usePathname();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const menuItems = [
+        { name: 'Accueil', path: '/' },
         { name: 'Mes Projets', path: '/projects' },
         { name: 'A Propos', path: '/about' },
         { name: 'Mes Compétences', path: '/skills' },
@@ -22,8 +25,9 @@ export default function MyNavbar() {
         { name: 'Témoignages', path: '/testimonials' },
         { name: 'Me Contacter', path: '/contact' },
     ];
+
     return (
-        <Navbar onMenuOpenChange={setIsMenuOpen}>
+        <Navbar className='z-20' onMenuOpenChange={setIsMenuOpen}>
             <NavbarContent>
                 <NavbarMenuToggle
                     aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
@@ -48,16 +52,16 @@ export default function MyNavbar() {
             </NavbarContent>
             <NavbarMenu>
                 {menuItems.map((item, index) => (
-                    <NavbarMenuItem key={item.name}>
-                        <Link
-                            color={index === 1 ? 'primary' : 'foreground'}
+                    <Link href={item.path} key={index} passHref>
+                        <NavbarItem
                             className='w-full'
-                            href={item.path}
-                            size='lg'
+                            style={{
+                                color: pathname === item.path ? 'var(--color-primary)' : 'black',
+                            }}
                         >
                             {item.name}
-                        </Link>
-                    </NavbarMenuItem>
+                        </NavbarItem>
+                    </Link>
                 ))}
             </NavbarMenu>
         </Navbar>
